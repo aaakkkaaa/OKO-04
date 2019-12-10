@@ -487,6 +487,7 @@ namespace Mapbox.Unity.Map
 
 		protected virtual void Awake()
 		{
+			System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; // Вставлено АКА, удаляет ошибку замены десятичной точки на запятую в инспекторе
 			if (_previewOptions.isPreviewEnabled == true)
 			{
 				DisableEditorPreview();
