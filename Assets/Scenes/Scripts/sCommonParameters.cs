@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mapbox.Unity.Map;
@@ -6,12 +7,12 @@ using Mapbox.Utils;
 
 public class sCommonParameters : MonoBehaviour
 {
-    public Vector3 GlobalScale = Vector3.one;
+    public Vector3 GlobalScale = new Vector3(0.000242f, 0.000242f, 0.000242f);
     [SerializeField] private AbstractMap _myAbsMap;
     [SerializeField] private Transform _UUEE_Surface;
     [SerializeField] private Transform _Mortar;
 
-    private float _Zoom0;
+    [NonSerialized] public float _Zoom0;
     private Vector3 _Scale0;
     private Vector3 _MortarPos0;
 
@@ -70,5 +71,20 @@ public class sCommonParameters : MonoBehaviour
             _UUEE_Surface.localScale = _Scale0 * my2Power;
             _Mortar.localPosition = _MortarPos0 * my2Power;
         }
+    }
+
+    public float GetZoom()
+    {
+        return _myAbsMap.Zoom;
+    }
+
+    public bool SetZoom(float NewZoom)
+    {
+        if (NewZoom > 6.0f || NewZoom < 16.0f)
+        {
+            _myAbsMap.UpdateMap(NewZoom);
+            return true;
+        }
+        return false;
     }
 }
