@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -149,8 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af064796eadbe40875ace7eb92406d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalScale: {x: 0, y: 0, z: 0}
+  GlobalScale: {x: 1, y: 1, z: 1}
   _myAbsMap: {fileID: 555018383}
+  _UUEE_Surface: {fileID: 555960952}
+  _Mortar: {fileID: 229567451}
 --- !u!4 &133207908
 Transform:
   m_ObjectHideFlags: 0
@@ -392,14 +394,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 229567450}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 533f6f8be2c46b944bcae155fcd3d3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _panSpeed: 5
   _vertSpeed: 2
-  _yawSpeed: 1
   hMin: 0.0242
   hMax: 4.84
   myFlightTime: 2
@@ -536,7 +537,7 @@ MonoBehaviour:
   _options:
     locationOptions:
       latitudeLongitude: 55.97239722, 37.41305278
-      zoom: 14
+      zoom: 12
     extentOptions:
       extentType: 0
       defaultExtents:
@@ -558,7 +559,7 @@ MonoBehaviour:
       snapMapToZero: 0
     scalingOptions:
       scalingType: 1
-      unityTileSize: 0.333
+      unityTileSize: 1.332
     loadingTexture: {fileID: 2800000, guid: e2896a92727704803a9c422b043eae89, type: 3}
     tileMaterial: {fileID: 2100000, guid: b9f23e9bce724fa4daac57ecded470b8, type: 2}
   _initializeOnStart: 1

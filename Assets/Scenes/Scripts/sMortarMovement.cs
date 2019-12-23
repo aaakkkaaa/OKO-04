@@ -12,8 +12,8 @@ public class sMortarMovement : MonoBehaviour
     [SerializeField]
     float _vertSpeed = 2f;
 
-    [SerializeField]
-    float _yawSpeed = 1f;
+//    [SerializeField]
+//    float _yawSpeed = 1f;
 
     Camera _referenceCamera;
 
