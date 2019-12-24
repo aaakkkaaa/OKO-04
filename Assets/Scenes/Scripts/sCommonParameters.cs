@@ -7,21 +7,17 @@ using Mapbox.Utils;
 
 public class sCommonParameters : MonoBehaviour
 {
-    public Vector3 GlobalScale = new Vector3(0.000242f, 0.000242f, 0.000242f);
-    [SerializeField] private AbstractMap _myAbsMap;
-    [SerializeField] private Transform _UUEE_Surface;
-    [SerializeField] private Transform _Mortar;
+    public Vector3 WorldScale0 = new Vector3(0.000242f, 0.000242f, 0.000242f);
+    [SerializeField] private AbstractMap _AbsMap;
 
-    [NonSerialized] public float _Zoom0;
-    private Vector3 _Scale0;
-    private Vector3 _MortarPos0;
+    [NonSerialized] public float MapZoom0;
+    [NonSerialized] public Vector3 WorldScale;
 
     // Start is called before the first frame update
     void Start()
     {
-        _Zoom0 = _myAbsMap.Zoom;
-        _Scale0 = _UUEE_Surface.localScale;
-        _MortarPos0 = _Mortar.localPosition;
+        MapZoom0 = _AbsMap.Zoom;
+        WorldScale = WorldScale0;
     }
 
     // Update is called once per frame
@@ -30,59 +26,45 @@ public class sCommonParameters : MonoBehaviour
         if (Input.GetKeyDown("1")) // Переход к новым координатам
         {
             /*
-            print("UnityTileSize = " + _myAbsMap.UnityTileSize);
-            print("WorldRelativeScale = " + _myAbsMap.WorldRelativeScale);
-            print("Zoom = " + _myAbsMap.Zoom);
-            print("CenterLatitudeLongitude = " + _myAbsMap.CenterLatitudeLongitude);
-            print("CenterMercator = " + _myAbsMap.CenterMercator);
+            print("UnityTileSize = " + _AbsMap.UnityTileSize);
+            print("WorldRelativeScale = " + _AbsMap.WorldRelativeScale);
+            print("Zoom = " + _AbsMap.Zoom);
+            print("CenterLatitudeLongitude = " + _AbsMap.CenterLatitudeLongitude);
+            print("CenterMercator = " + _AbsMap.CenterMercator);
             print("");
 
-            _myAbsMap.SetZoom(_myAbsMap.Zoom + 0.1f);
-            _myAbsMap.UpdateMap();
+            _AbsMap.SetZoom(_AbsMap.Zoom + 0.1f);
+            _AbsMap.UpdateMap();
             */
 
             Vector2d myNewCoord = new Vector2d(47.26666667f, 11.35f); // Иннсбрук
-            _myAbsMap.UpdateMap(myNewCoord, 12f);
+            _AbsMap.UpdateMap(myNewCoord, 12f);
         }
         else if (Input.GetKeyDown("2")) // Переход от плоской карты к объемной
         {
-            print(_myAbsMap.Terrain.ElevationType);
-            if (_myAbsMap.Terrain.ElevationType != ElevationLayerType.TerrainWithElevation)
+            print(_AbsMap.Terrain.ElevationType);
+            if (_AbsMap.Terrain.ElevationType != ElevationLayerType.TerrainWithElevation)
             {
-                _myAbsMap.Terrain.SetElevationType(ElevationLayerType.TerrainWithElevation);
+                _AbsMap.Terrain.SetElevationType(ElevationLayerType.TerrainWithElevation);
             }
             else
             {
-                _myAbsMap.Terrain.SetElevationType(ElevationLayerType.FlatTerrain);
+                _AbsMap.Terrain.SetElevationType(ElevationLayerType.FlatTerrain);
             }
-            print(_myAbsMap.Terrain.ElevationType);
-        }
-        else if (Input.GetKeyDown("3")) // Изменение масштаба
-        {
-            float NewZoom = _myAbsMap.Zoom + 0.1f;
-            float my2Power = Mathf.Pow(2, NewZoom - _Zoom0);
-            float ScaleX = _Scale0.x * my2Power;
-
-            print("Новый масштаб карты: " + NewZoom + " Приращение: " + (NewZoom - _Zoom0) + " 2 в степени = " + my2Power + " Масштаб модели = " + ScaleX);
-
-
-
-            _myAbsMap.UpdateMap(NewZoom);
-            _UUEE_Surface.localScale = _Scale0 * my2Power;
-            _Mortar.localPosition = _MortarPos0 * my2Power;
+            print(_AbsMap.Terrain.ElevationType);
         }
     }
 
     public float GetZoom()
     {
-        return _myAbsMap.Zoom;
+        return _AbsMap.Zoom;
     }
 
     public bool SetZoom(float NewZoom)
     {
-        if (NewZoom > 6.0f || NewZoom < 16.0f)
+        if (NewZoom >= 11.0f && NewZoom < 15.0f)
         {
-            _myAbsMap.UpdateMap(NewZoom);
+            _AbsMap.UpdateMap(NewZoom);
             return true;
         }
         return false;
