@@ -1,36 +1,20 @@
 ﻿
 using System;
 using UnityEngine;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 
 
 public class sMortarMovement : MonoBehaviour
 {
+    // Класс, содержащий общие параметры и методы для работы с ними
     [SerializeField]
-    float _panSpeed = 5f;
-
-    [SerializeField]
-    float _vertSpeed = 2f;
-
-//    [SerializeField]
-//    float _yawSpeed = 1f;
+    private sCommonParameters _ComPars;
 
     Camera _referenceCamera;
 
     [SerializeField]
-    float hMin = 100f;
+    Text mySceenMessage;
 
-    [SerializeField]
-    float hMax = 20000f;
-
-    //[SerializeField]
-    //Text mySceenMessage;
-
-    Quaternion _originalRotation;
-    Vector3 _origin;
-    Vector3 _delta;
-    bool _shouldDrag;
-    bool _shouldRotate; // флаг вращения ступы по курсу при нажатии правой кнопки мыши
     Vector3 _oldMousePos;
     float myOldMouseX;
 
@@ -46,17 +30,6 @@ public class sMortarMovement : MonoBehaviour
     bool myFlight = false;
     // Время начала перелета, сек
     float myStartTime;
-    // Продолжительность перелета, сек
-    [SerializeField]
-    float myFlightTime = 2.0f;
-    // Положение в начале сеанса
-    Vector3 myHomePos;
-    Vector3 myHomeEu;
-    // Положение "на вышке"
-    Vector3 myTowerPos = new Vector3 ( 280, 100, 1100 );
-    Vector3 myTowerEu = new Vector3(0, 165, 0);
-    // Положение "на хвосте" - локальный сдвиг относительно самолета-носителя
-    Vector3 myTailPos = new Vector3(225, 300, -650);
 
     // Вспомогательный объект - точка проекции камеры на горизонтальную плоскость аватара
     Transform _CameraPlumb;
@@ -65,7 +38,6 @@ public class sMortarMovement : MonoBehaviour
     void Awake()
     {
         _referenceCamera = Camera.main;
-        _originalRotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
         if (_referenceCamera == null)
         {
@@ -78,9 +50,6 @@ public class sMortarMovement : MonoBehaviour
 
         // Вспомогательный объект - точка проекции камеры на горизонтальную плоскость аватара
         _CameraPlumb = transform.Find("CameraPlumb");
-
-        myHomePos = transform.position;
-        myHomeEu = transform.eulerAngles;
     }
 
     void LateUpdate()
@@ -88,7 +57,7 @@ public class sMortarMovement : MonoBehaviour
 
         if (myFlight) // Только перелетаем в заданное положение
         {
-            float myInterpolant = (Time.time - myStartTime) / myFlightTime;
+            float myInterpolant = (Time.time - myStartTime) / _ComPars.MortarFlightTime;
             transform.localPosition = Vector3.Lerp(myStartPos, myEndPos, myInterpolant);
             transform.localRotation = Quaternion.Lerp(Quaternion.Euler(myStarttEu), Quaternion.Euler(myEndEu), myInterpolant);
             if(myInterpolant > 1)
@@ -105,8 +74,8 @@ public class sMortarMovement : MonoBehaviour
                 myStartTime = Time.time;
                 myStartPos = transform.position;
                 myStarttEu = transform.eulerAngles;
-                myEndPos = myHomePos;
-                myEndEu = myHomeEu;
+                myEndPos = _ComPars.MortarHomePos;
+                myEndEu = _ComPars.MortarHomeEu;
 
                 myFlight = true;
             }
@@ -117,8 +86,8 @@ public class sMortarMovement : MonoBehaviour
                 myStartTime = Time.time;
                 myStartPos = transform.position;
                 myStarttEu = transform.eulerAngles;
-                myEndPos = myTowerPos;
-                myEndEu = myTowerEu;
+                myEndPos = _ComPars.MortarTowerPos;
+                myEndEu = _ComPars.MortarTowerEu;
 
                 myFlight = true;
             }
@@ -150,7 +119,7 @@ public class sMortarMovement : MonoBehaviour
                         myStartPos = transform.localPosition;
                         myStarttEu = transform.localEulerAngles;
                         myStarttEu.y = myFuncNormalizeAngle(myStarttEu.y); // нормализовать курсовой угол в диапазоне +/- 180 градусов
-                        myEndPos = myTailPos;
+                        myEndPos = _ComPars.MortarTailPos;
                         myEndEu = Vector3.zero;
                         myStartTime = Time.time;
 
@@ -195,8 +164,8 @@ public class sMortarMovement : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Vector3 myCurMousePos = Input.mousePosition;
-                    x = x + (myCurMousePos.x - _oldMousePos.x) * _panSpeed / 100f;
-                    z = z + (myCurMousePos.y - _oldMousePos.y) * _panSpeed / 100f;
+                    x = x + (myCurMousePos.x - _oldMousePos.x) * _ComPars.MortarPanSpeed / 10f;
+                    z = z + (myCurMousePos.y - _oldMousePos.y) * _ComPars.MortarPanSpeed / 10f;
                 }
 
                 // Перемещение по колесику мыши
@@ -251,21 +220,22 @@ public class sMortarMovement : MonoBehaviour
                 // Если был сигнал перемещения, перемещаем
                 if (x != 0.0f || y != 0.0f || z != 0.0f)
                 {
-                    float myHorSpeed = Mathf.Clamp(_panSpeed * transform.localPosition.y / hMin, 10.0f, 1000.0f); // Умножим скорость перемещения на относительную высоту
-                    float myVertSpeed = Mathf.Clamp(_vertSpeed * transform.localPosition.y / hMin * transform.localPosition.y / hMin, _vertSpeed, _vertSpeed * 25.0f); // Умножим вертикальную скорость перемещения на относительную высоту
+                    float myHorSpeed = Mathf.Clamp(_ComPars.MortarPanSpeed * transform.localPosition.y / _ComPars.MortarHeightMin, _ComPars.WorldScale.x*10.0f, _ComPars.WorldScale.x * 1000.0f); // Умножим скорость перемещения на относительную высоту
+                    float myVertSpeed = Mathf.Clamp(_ComPars.MortarVertSpeed * transform.localPosition.y / _ComPars.MortarHeightMin * transform.localPosition.y / _ComPars.MortarHeightMin, _ComPars.MortarVertSpeed, _ComPars.MortarVertSpeed * 25.0f); // Умножим вертикальную скорость перемещения на относительную высоту
                     // Переместить по горизонтали
                     transform.Translate(x * myHorSpeed, 0f, z * myHorSpeed);
+                    //print("Параметры перемещения: x = " + x + ", z = " + z + ", myHorSpeed = " + myHorSpeed + ", y =" + y + ", myVertSpeed = " + myVertSpeed);
                     // Взять позицию
                     Vector3 myPos = transform.localPosition;
                     // Ограничить новую высоту
-                    myPos.y = Mathf.Clamp((myPos.y + y * y * y * myVertSpeed), hMin, hMax);
+                    myPos.y = Mathf.Clamp((myPos.y + y * y * y * myVertSpeed), _ComPars.MortarHeightMin, _ComPars.MortarHeightMax);
                     //Применить
                     transform.localPosition = myPos;
                 }
 
             }
         }
-        //mySceenMessage.text = "Высота камеры = " + Math.Round(transform.position.y, 2);
+        mySceenMessage.text = "Высота камеры = " + Math.Round(transform.position.y / _ComPars.WorldScale.y, 0);
     }
 
     // Повернуть опорный объект (Mortar) вокруг камеры (так, чтобы камера вращалась, оставалась на месте)

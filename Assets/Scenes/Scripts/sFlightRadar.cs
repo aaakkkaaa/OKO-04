@@ -15,11 +15,55 @@ public class sFlightRadar : MonoBehaviour
     // Объекты, подлежащие позиционированию при изменении WorldScale
     [SerializeField] private Transform _Mortar; // Ступа с наблюдателем
 
+    // ===========================================================================================
+    // Параметры положения и перемещения ступы с наблюдателем, которые меняются  при изменении глобального масштаба
+    // ===========================================================================================
+
+    // Класс, управляющий перемещением ступы
+    sMortarMovement _mortarMovement;
+
+    // Начальные скорости перемещений ступы
+    float _MortarPanSpeed0;
+    float _MortarVertSpeed0;
+    // Начальные ограничения высоты перемещений ступы
+    float _MortarHeightMin0;
+    float _MortarHeightMax0;
+
+    // Стандартные положения ступы
+
+    // Начальное положение
+    Vector3 _MortarHomePos0;
+    // Положение "на вышке"
+    Vector3 _MortarTowerPos0;
+    // Положение "на хвосте" - локальный сдвиг относительно самолета-носителя
+    Vector3 _MortarTailPos0;
+
+    // ===========================================================================================
+
+
     // Start is called before the first frame update
     void Start()
     {
         // Класс, содержащий общие параметры и методы для работы с ними
         _ComPars = gameObject.GetComponent<sCommonParameters>();
+
+        // Начальные значения параметров положения и перемещения ступы с наблюдателем
+        // Скорости перемещений
+        _MortarPanSpeed0 = _ComPars.MortarPanSpeed;
+        _MortarVertSpeed0 = _ComPars.MortarVertSpeed;
+        // Начальные ограничения высоты перемещений
+        _MortarHeightMin0 = _ComPars.MortarHeightMin;
+        _MortarHeightMax0 = _ComPars.MortarHeightMax;
+        // Начальное положение
+        _MortarHomePos0 = _ComPars.MortarHomePos;
+        // Положение "на вышке"
+        _MortarTowerPos0 = _ComPars.MortarTowerPos;
+        // Положение "на хвосте" - локальный сдвиг относительно самолета-носителя
+        _MortarTailPos0 = _ComPars.MortarTailPos;
+
+        // Установить текушие параметрs положения и перемещения ступы с наблюдателем с учетом начального глобального масштаба
+        SetMortarSpeedAndRestrictions(_ComPars.WorldScale0);
+
     }
 
     // Update is called once per frame
@@ -52,12 +96,15 @@ public class sFlightRadar : MonoBehaviour
         // Предыдущий коэффициент для глобального масштаба
         float PreviousTwoInPower = Mathf.Pow(2, (_ComPars.GetZoom() - _ComPars.MapZoom0));
 
-        // Новый глобальный масштаб
-        _ComPars.WorldScale = _ComPars.WorldScale0 * twoInPowerIncr;
-
         // Если новый масштаб карты установлен успешно (ограничения min и max)
         if (_ComPars.SetZoom(newZoom))
         {
+            // Новый глобальный масштаб
+            _ComPars.WorldScale = _ComPars.WorldScale0 * twoInPowerIncr;
+
+            // Установить текушие скорости перемещений и ограничения высоты ступы с наблюдателем с учетом глобального масштаба
+            SetMortarSpeedAndRestrictions(_ComPars.WorldScale);
+
             // Mасштабирование
             _UUEE_Surface.localScale = _ComPars.WorldScale;
             // Позиционироание
@@ -65,5 +112,25 @@ public class sFlightRadar : MonoBehaviour
         }
 
         print("Новый масштаб карты: " + newZoom + " Приращение: " + increment + " 2 в степени = " + twoInPowerIncr + " Масштаб моделей = " + _ComPars.WorldScale.x);
+    }
+
+    // Установить скорости перемещений и ограничения высоты ступы с наблюдателем с учетом глобального масштаба
+    private void SetMortarSpeedAndRestrictions(Vector3 Scale)
+    {
+        // Скорости перемещений
+        _ComPars.MortarPanSpeed = _MortarPanSpeed0 * Scale.x;
+        _ComPars.MortarVertSpeed = _MortarVertSpeed0 * Scale.y;
+
+        // Ограничения высоты перемещений
+        _ComPars.MortarHeightMin = _MortarHeightMin0 * Scale.y;
+        _ComPars.MortarHeightMax = _MortarHeightMax0 * Scale.y;
+
+        // Начальное положение
+        _ComPars.MortarHomePos = new Vector3(_MortarHomePos0.x * Scale.x, _MortarHomePos0.y * Scale.y, _MortarHomePos0.z * Scale.z);
+        // Положение "на вышке"
+        _ComPars.MortarTowerPos = new Vector3(_MortarTowerPos0.x * Scale.x, _MortarTowerPos0.y * Scale.y, _MortarTowerPos0.z * Scale.z);
+        // Положение "на хвосте" - локальный сдвиг относительно самолета-носителя
+        _ComPars.MortarTailPos = new Vector3(_MortarTailPos0.x * Scale.x, _MortarTailPos0.y * Scale.y, _MortarTailPos0.z * Scale.z);
+
     }
 }

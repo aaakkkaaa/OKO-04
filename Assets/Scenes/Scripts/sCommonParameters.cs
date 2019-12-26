@@ -13,6 +13,27 @@ public class sCommonParameters : MonoBehaviour
     [NonSerialized] public float MapZoom0;
     [NonSerialized] public Vector3 WorldScale;
 
+    // Скорости перемещений ступы с наблюдателем
+    public float MortarPanSpeed = 5f;
+    public float MortarVertSpeed = 2f;
+
+    // Ограничения высоты перемещений ступы с наблюдателем
+    public float MortarHeightMin = 100f;
+    public float MortarHeightMax = 20000f;
+
+    // Продолжительность перелета в заданную точку, сек
+    public float MortarFlightTime = 2.0f;
+    // Положение в начале сеанса
+    [NonSerialized] public Vector3 MortarHomePos = new Vector3(0, 3000, -4500);
+    [NonSerialized] public Vector3 MortarHomeEu = new Vector3(0, 0, 0);
+    // Положение "на вышке"
+    [NonSerialized] public Vector3 MortarTowerPos = new Vector3(280, 100, 1100);
+    [NonSerialized] public Vector3 MortarTowerEu = new Vector3(0, 165, 0);
+    // Положение "на хвосте" - локальный сдвиг относительно самолета-носителя
+    [NonSerialized] public Vector3 MortarTailPos = new Vector3(225, 300, -650);
+
+
+
     // Start is called before the first frame update
     void Start()
     {
