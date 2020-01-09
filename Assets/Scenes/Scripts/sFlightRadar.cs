@@ -10,7 +10,7 @@ public class sFlightRadar : MonoBehaviour
     private sCommonParameters _ComPars;
 
     // Объекты, подлежащие масштабированию при изменении WorldScale
-    [SerializeField] private Transform _UUEE_Surface; // Дороги, ВПП и рулежки аэропорта Шеререметьево
+    [SerializeField] private Transform[] _ScaledObjects = new Transform[3]; // Дороги, ВПП и рулежки аэропорта Шеререметьево
 
     // Объекты, подлежащие позиционированию при изменении WorldScale
     [SerializeField] private Transform _Mortar; // Ступа с наблюдателем
@@ -106,7 +106,10 @@ public class sFlightRadar : MonoBehaviour
             SetMortarSpeedAndRestrictions(_ComPars.WorldScale);
 
             // Mасштабирование
-            _UUEE_Surface.localScale = _ComPars.WorldScale;
+            for(int i = 0; i < _ScaledObjects.Length; i++)
+            {
+                _ScaledObjects[i].localScale = _ComPars.WorldScale;
+            }
             // Позиционироание
             _Mortar.localPosition = _Mortar.localPosition / PreviousTwoInPower * twoInPowerIncr;
         }

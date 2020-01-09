@@ -8,10 +8,13 @@ using Mapbox.Utils;
 public class sCommonParameters : MonoBehaviour
 {
     public Vector3 WorldScale0 = new Vector3(0.000242f, 0.000242f, 0.000242f);
-    [SerializeField] private AbstractMap _AbsMap;
+    [SerializeField]
+    private AbstractMap _AbsMap;
 
-    [NonSerialized] public float MapZoom0;
-    [NonSerialized] public Vector3 WorldScale;
+    [NonSerialized]
+    public float MapZoom0;
+    [NonSerialized]
+    public Vector3 WorldScale;
 
     // Скорости перемещений ступы с наблюдателем
     public float MortarPanSpeed = 5f;
@@ -44,35 +47,37 @@ public class sCommonParameters : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("1")) // Переход к новым координатам
+        if (Input.GetKey("left shift") || Input.GetKey("right shift")) // Если нажата кнопка Shift
         {
-            /*
-            print("UnityTileSize = " + _AbsMap.UnityTileSize);
-            print("WorldRelativeScale = " + _AbsMap.WorldRelativeScale);
-            print("Zoom = " + _AbsMap.Zoom);
-            print("CenterLatitudeLongitude = " + _AbsMap.CenterLatitudeLongitude);
-            print("CenterMercator = " + _AbsMap.CenterMercator);
-            print("");
-
-            _AbsMap.SetZoom(_AbsMap.Zoom + 0.1f);
-            _AbsMap.UpdateMap();
-            */
-
-            Vector2d myNewCoord = new Vector2d(47.26666667f, 11.35f); // Иннсбрук
-            _AbsMap.UpdateMap(myNewCoord, 12f);
-        }
-        else if (Input.GetKeyDown("2")) // Переход от плоской карты к объемной
-        {
-            print(_AbsMap.Terrain.ElevationType);
-            if (_AbsMap.Terrain.ElevationType != ElevationLayerType.TerrainWithElevation)
+            if (Input.GetKeyDown("1")) // Переход к новым координатам
             {
-                _AbsMap.Terrain.SetElevationType(ElevationLayerType.TerrainWithElevation);
+
+                print("UnityTileSize = " + _AbsMap.UnityTileSize);
+                print("WorldRelativeScale = " + _AbsMap.WorldRelativeScale);
+                print("Zoom = " + _AbsMap.Zoom);
+                print("CenterLatitudeLongitude = " + _AbsMap.CenterLatitudeLongitude);
+                print("CenterMercator = " + _AbsMap.CenterMercator);
+                print("");
+
+                _AbsMap.SetZoom(_AbsMap.Zoom + 0.1f);
+                _AbsMap.UpdateMap();
+
+                Vector2d myNewCoord = new Vector2d(47.26666667f, 11.35f); // Иннсбрук
+                _AbsMap.UpdateMap(myNewCoord, 12f);
             }
-            else
+            if (Input.GetKeyDown("2")) // Переход от плоской карты к объемной
             {
-                _AbsMap.Terrain.SetElevationType(ElevationLayerType.FlatTerrain);
+                print(_AbsMap.Terrain.ElevationType);
+                if (_AbsMap.Terrain.ElevationType != ElevationLayerType.TerrainWithElevation)
+                {
+                    _AbsMap.Terrain.SetElevationType(ElevationLayerType.TerrainWithElevation);
+                }
+                else
+                {
+                    _AbsMap.Terrain.SetElevationType(ElevationLayerType.FlatTerrain);
+                }
+                print(_AbsMap.Terrain.ElevationType);
             }
-            print(_AbsMap.Terrain.ElevationType);
         }
     }
 
@@ -89,5 +94,12 @@ public class sCommonParameters : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public Vector3 GeoToWorldPosition(float Latitude, float Longitude, bool queryHeight = true)
+    {
+        Vector2d latitudeLongitude = new Vector2d(Latitude, Longitude);
+        Vector3 worldPos = _AbsMap.GeoToWorldPosition(latitudeLongitude, queryHeight);
+        return worldPos;
     }
 }
