@@ -154,7 +154,7 @@ MonoBehaviour:
   _AbsMap: {fileID: 555018383}
   MortarPanSpeed: 5
   MortarVertSpeed: 2
-  MortarHeightMin: 100
+  MortarHeightMin: -4000
   MortarHeightMax: 20000
   MortarFlightTime: 2
 --- !u!4 &133207908
@@ -745,17 +745,17 @@ MonoBehaviour:
       latitudeLongitude: 55.97239722, 37.41305278
       zoom: 12
     extentOptions:
-      extentType: 0
+      extentType: 1
       defaultExtents:
         cameraBoundsOptions:
           camera: {fileID: 1787361574}
           visibleBuffer: 0
           disposeBuffer: 0
         rangeAroundCenterOptions:
-          west: 1
-          north: 1
-          east: 1
-          south: 1
+          west: 5
+          north: 5
+          east: 5
+          south: 5
         rangeAroundTransformOptions:
           targetTransform: {fileID: 0}
           visibleBuffer: 0
@@ -2242,6 +2242,7 @@ GameObject:
   - component: {fileID: 1787361574}
   - component: {fileID: 1787361572}
   - component: {fileID: 1787361571}
+  - component: {fileID: 1787361573}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2265,6 +2266,24 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787361570}
   m_Enabled: 1
+--- !u!114 &1787361573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787361570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Device: 0
+  m_PoseSource: 2
+  m_PoseProviderComponent: {fileID: 0}
+  m_TrackingType: 0
+  m_UpdateType: 0
+  m_UseRelativeTransform: 0
 --- !u!20 &1787361574
 Camera:
   m_ObjectHideFlags: 0
@@ -2316,7 +2335,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787361570}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 229567451}
