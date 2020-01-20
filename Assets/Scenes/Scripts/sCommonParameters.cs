@@ -35,6 +35,8 @@ public class sCommonParameters : MonoBehaviour
     // Положение "на хвосте" - локальный сдвиг относительно самолета-носителя
     [NonSerialized] public Vector3 MortarTailPos = new Vector3(225, 300, -650);
 
+    // Объект для вывода сообщений в пространство
+    sTextMessage _WorldMessage;
 
 
     // Start is called before the first frame update
@@ -42,6 +44,9 @@ public class sCommonParameters : MonoBehaviour
     {
         MapZoom0 = _AbsMap.Zoom;
         WorldScale = WorldScale0;
+
+        // Объект для вывода сообщений в пространство
+        _WorldMessage = GameObject.Find("TextMessage").GetComponent<sTextMessage>();
     }
 
     // Update is called once per frame
@@ -79,6 +84,13 @@ public class sCommonParameters : MonoBehaviour
                 print(_AbsMap.Terrain.ElevationType);
             }
         }
+
+        // Тестовое ссобщение
+        if (Input.GetKeyDown("9"))
+        {
+            _WorldMessage.myFuncShowMessage("Нажата клавиша 9", 3.0f);
+        }
+
     }
 
     public float GetZoom()
