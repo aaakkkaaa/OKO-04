@@ -74,7 +74,7 @@ public class sMortarMovement : MonoBehaviour
                 myStartTime = Time.time;
                 myStartPos = transform.position;
                 myStarttEu = transform.eulerAngles;
-                myEndPos = _ComPars.MortarHomePos;
+                myEndPos = Vector3.Scale(_ComPars.MortarHomePos, _ComPars.WorldScale);
                 myEndEu = _ComPars.MortarHomeEu;
 
                 myFlight = true;
@@ -86,7 +86,7 @@ public class sMortarMovement : MonoBehaviour
                 myStartTime = Time.time;
                 myStartPos = transform.position;
                 myStarttEu = transform.eulerAngles;
-                myEndPos = _ComPars.MortarTowerPos;
+                myEndPos = Vector3.Scale(_ComPars.MortarTowerPos, _ComPars.WorldScale);
                 myEndEu = _ComPars.MortarTowerEu;
 
                 myFlight = true;
@@ -164,12 +164,12 @@ public class sMortarMovement : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Vector3 myCurMousePos = Input.mousePosition;
-                    x = x + (myCurMousePos.x - _oldMousePos.x) * _ComPars.MortarPanSpeed * 5;
-                    z = z + (myCurMousePos.y - _oldMousePos.y) * _ComPars.MortarPanSpeed * 5;
+                    x = x + (myCurMousePos.x - _oldMousePos.x) * _ComPars.MortarPanSpeed / 100;
+                    z = z + (myCurMousePos.y - _oldMousePos.y) * _ComPars.MortarPanSpeed / 100;
                 }
 
                 // Перемещение по колесику мыши
-                y = y + Input.GetAxis("Mouse ScrollWheel") * 40;
+                y = y + Input.GetAxis("Mouse ScrollWheel") * 20;
 
                 // Поворот при нажатой правой кнопке мыши. Установим параметр поворота w
                 if (Input.GetMouseButtonDown(1))
@@ -228,7 +228,7 @@ public class sMortarMovement : MonoBehaviour
                     // Взять позицию
                     Vector3 myPos = transform.localPosition;
                     // Ограничить новую высоту
-                    myPos.y = Mathf.Clamp((myPos.y + y * y * y * myVertSpeed), _ComPars.MortarHeightMin, _ComPars.MortarHeightMax);
+                    myPos.y = Mathf.Clamp((myPos.y + y * y * y * myVertSpeed * _ComPars.WorldScale.y), _ComPars.MortarHeightMin * _ComPars.WorldScale.y, _ComPars.MortarHeightMax * _ComPars.WorldScale.y);
                     //Применить
                     transform.localPosition = myPos;
                 }
