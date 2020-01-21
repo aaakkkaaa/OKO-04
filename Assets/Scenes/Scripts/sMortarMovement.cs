@@ -164,12 +164,12 @@ public class sMortarMovement : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Vector3 myCurMousePos = Input.mousePosition;
-                    x = x + (myCurMousePos.x - _oldMousePos.x) * _ComPars.MortarPanSpeed / 10f;
-                    z = z + (myCurMousePos.y - _oldMousePos.y) * _ComPars.MortarPanSpeed / 10f;
+                    x = x + (myCurMousePos.x - _oldMousePos.x) * _ComPars.MortarPanSpeed * 5;
+                    z = z + (myCurMousePos.y - _oldMousePos.y) * _ComPars.MortarPanSpeed * 5;
                 }
 
                 // Перемещение по колесику мыши
-                y = y + Input.GetAxis("Mouse ScrollWheel") * 20;
+                y = y + Input.GetAxis("Mouse ScrollWheel") * 40;
 
                 // Поворот при нажатой правой кнопке мыши. Установим параметр поворота w
                 if (Input.GetMouseButtonDown(1))
@@ -220,8 +220,8 @@ public class sMortarMovement : MonoBehaviour
                 // Если был сигнал перемещения, перемещаем
                 if (x != 0.0f || y != 0.0f || z != 0.0f)
                 {
-                    float myHorSpeed = Mathf.Clamp(_ComPars.MortarPanSpeed * transform.localPosition.y / _ComPars.MortarHeightMin, _ComPars.WorldScale.x*10.0f, _ComPars.WorldScale.x * 1000.0f); // Умножим скорость перемещения на относительную высоту
-                    float myVertSpeed = Mathf.Clamp(_ComPars.MortarVertSpeed * transform.localPosition.y / _ComPars.MortarHeightMin * transform.localPosition.y / _ComPars.MortarHeightMin, _ComPars.MortarVertSpeed, _ComPars.MortarVertSpeed * 25.0f); // Умножим вертикальную скорость перемещения на относительную высоту
+                    float myHorSpeed = Mathf.Clamp(_ComPars.MortarPanSpeed * transform.localPosition.y / _ComPars.MortarHeightMin * 1000, _ComPars.WorldScale.x*100.0f, _ComPars.WorldScale.x * 1000000.0f); // Умножим скорость перемещения на относительную высоту
+                    float myVertSpeed = Mathf.Clamp(_ComPars.MortarVertSpeed * transform.localPosition.y / _ComPars.MortarHeightMin * transform.localPosition.y / _ComPars.MortarHeightMin * 10, _ComPars.MortarVertSpeed, _ComPars.MortarVertSpeed * 25.0f); // Умножим вертикальную скорость перемещения на относительную высоту
                     // Переместить по горизонтали
                     transform.Translate(x * myHorSpeed, 0f, z * myHorSpeed);
                     //print("Параметры перемещения: x = " + x + ", z = " + z + ", myHorSpeed = " + myHorSpeed + ", y =" + y + ", myVertSpeed = " + myVertSpeed);

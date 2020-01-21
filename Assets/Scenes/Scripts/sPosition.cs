@@ -98,7 +98,7 @@ public class sPosition : MonoBehaviour {
             
             // Здесь нужно переделывать под новую версию MapBox
             
-            Vector3 worldPosition = _ComPars.GeoToWorldPosition(goToLatitude, goToLongitude, true);
+            Vector3 worldPosition = _ComPars.GeoToWorldPosition(goToLatitude, goToLongitude);
 
             print("Cube worldPosition = " + worldPosition.x + ", " + goToAltitude + "(" + worldPosition.y + "), " + worldPosition.z);
             worldPosition.y = goToAltitude * _ComPars.WorldScale.y;

@@ -89,6 +89,7 @@ public class sCommonParameters : MonoBehaviour
         if (Input.GetKeyDown("9"))
         {
             _WorldMessage.myFuncShowMessage("Нажата клавиша 9", 3.0f);
+            Vector3 myGeoPos = WorldToGeoPosition(Vector3.zero);
         }
 
     }
@@ -108,10 +109,26 @@ public class sCommonParameters : MonoBehaviour
         return false;
     }
 
-    public Vector3 GeoToWorldPosition(float Latitude, float Longitude, bool queryHeight = true)
+    // Географические координаты в прямоуголные
+    public Vector3 GeoToWorldPosition(float Latitude, float Longitude)
     {
+        print("GeoToWorldPosition");
+        print("Latitude = " + Latitude + " Longitude = " + Longitude);
+
         Vector2d latitudeLongitude = new Vector2d(Latitude, Longitude);
-        Vector3 worldPos = _AbsMap.GeoToWorldPosition(latitudeLongitude, queryHeight);
+        Vector3 worldPos = _AbsMap.GeoToWorldPosition(latitudeLongitude, false);
+        print("worldPos = " + worldPos + " worldPos.X = " + worldPos.x + " worldPos.Z = " + worldPos.z);
+
         return worldPos;
     }
+
+
+    // Прямоуголные координаты  в географические
+    public Vector3 WorldToGeoPosition(Vector3 Position)
+    {
+        Vector2d GeoPos = _AbsMap.WorldToGeoPosition(Position);
+        Vector3 GeoPosition = new Vector3((float)GeoPos.x, (float)GeoPos.y, 0.0f);
+        return GeoPosition;
+    }
+
 }
