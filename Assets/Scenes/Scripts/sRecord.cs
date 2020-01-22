@@ -25,14 +25,8 @@ public class sRecord : MonoBehaviour
     OpenSky - Файл для записи исходных данных opensky-network.org
     */
 
-
-    // Отладочный параметр - запиcывать ли логи
-    [SerializeField]
-    bool _WriteLog = true;
-
-    // Запиcывать ли исходные данные web
-    [SerializeField]
-    bool _WriteWebData = true;
+    // Класс, содержащий общие параметры и методы для работы с ними
+    private sCommonParameters _ComPars;
 
     // Параметры времени
     sTime _Time;
@@ -41,8 +35,8 @@ public class sRecord : MonoBehaviour
 
     void Awake()
     {
-
-        // ********************** Запись данных в файлы ********************************************
+        // Класс, содержащий общие параметры и методы для работы с ними
+        _ComPars = transform.GetComponent<sCommonParameters>();
 
         print("RecDir = " + RecDir);
 
@@ -51,7 +45,8 @@ public class sRecord : MonoBehaviour
         RecDir = Path.Combine(Directory.GetCurrentDirectory(), RecDir);
         print("RecDir = " + RecDir);
 
-        if (_WriteLog)
+        // Создать (пересоздать) файлы и добавить из в словарь
+        if (_ComPars.WriteLog) // Если установлен параметр записи логов
         {
             // Файл для записи по умолчанию
             AddToDic("Main");
@@ -67,7 +62,7 @@ public class sRecord : MonoBehaviour
             AddToDic("Banners");
         }
 
-        if (_WriteWebData)
+        if (_ComPars.WriteWebData) // Если установлен параметр записи полученных из Web данных
         {
             //Adsbexchange - Файл для записи исходных данных adsbexchange.com
             //AddToDic("ADSB_Exchange");
@@ -93,7 +88,7 @@ public class sRecord : MonoBehaviour
     // Запись в указанный файл
     public void MyLog(string myRecName, String myInfo)
     {
-        if (_WriteLog)
+        if (_ComPars.WriteLog)
         {
             int myCurrentTime = _Time.CurrentTime();
             _RecFile[myRecName].WriteLine(myInfo.Replace(".", ",") + " CurrentTime = " + myCurrentTime);
@@ -103,7 +98,7 @@ public class sRecord : MonoBehaviour
     // Запись в указанный файл с возможностью не добавлять время
     public void MyLog(string myRecName, String myInfo, bool myTime)
     {
-        if (_WriteLog)
+        if (_ComPars.WriteLog)
         {
             if (myTime)
             {
@@ -120,7 +115,7 @@ public class sRecord : MonoBehaviour
     // Запись в файл по умолчанию
     public void MyLog(String myInfo)
     {
-        if (_WriteLog)
+        if (_ComPars.WriteLog)
         {
             _RecFile["Main"].WriteLine(myInfo.Replace(".", ","));
         }
@@ -129,7 +124,7 @@ public class sRecord : MonoBehaviour
     // Запись в два файла
     public void MyLog(string myRecName1, string myRecName2, String myInfo)
     {
-        if (_WriteLog)
+        if (_ComPars.WriteLog)
         {
             int myCurrentTime = _Time.CurrentTime();
             _RecFile[myRecName1].WriteLine(myInfo.Replace(".", ",") + " CurrentTime = " + myCurrentTime);
@@ -140,7 +135,7 @@ public class sRecord : MonoBehaviour
     // Запись в файл web данных
     public void WebData(string myRecName, string myInfo)
     {
-        if (_WriteWebData)
+        if (_ComPars.WriteWebData)
         {
             _RecFile[myRecName].WriteLine(myInfo);
         }
@@ -151,7 +146,7 @@ public class sRecord : MonoBehaviour
     // Закрыть один лог-файл и удалить его запись из словаря лог-файлов
     public void Close(string myRecName)
     {
-        if (_WriteLog)
+        if (_ComPars.WriteLog)
         {
             _RecFile[myRecName].Close();
             _RecFile.Remove(myRecName);

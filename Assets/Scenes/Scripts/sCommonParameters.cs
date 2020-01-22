@@ -7,14 +7,30 @@ using Mapbox.Utils;
 
 public class sCommonParameters : MonoBehaviour
 {
+
+    // Получать данные из интернета. В противном случае из файла Record.txt
+    public bool DataFromWeb = true;
+
+    // Отладочный параметр - запиcывать ли логи
+    public bool WriteLog = true;
+
+    // Запиcывать ли исходные данные web
+    public bool WriteWebData = true;
+
+    // Глобальный масштаб сцены, начальное значение
     public Vector3 WorldScale0 = new Vector3(0.000242f, 0.000242f, 0.000242f);
+
+    // Глобальный масштаб сцены
+    [NonSerialized]
+    public Vector3 WorldScale;
+
+    // Класс управления картой MapBox
     [SerializeField]
     private AbstractMap _AbsMap;
 
+    // Масштаб карты MapBox, начальное значение
     [NonSerialized]
     public float MapZoom0;
-    [NonSerialized]
-    public Vector3 WorldScale;
 
     // Скорости перемещений ступы с наблюдателем
     public float MortarPanSpeed = 5f;
@@ -109,15 +125,15 @@ public class sCommonParameters : MonoBehaviour
         return false;
     }
 
-    // Географические координаты в прямоуголные
+    // Географические координаты в прямоугольные
     public Vector3 GeoToWorldPosition(float Latitude, float Longitude)
     {
-        print("GeoToWorldPosition");
-        print("Latitude = " + Latitude + " Longitude = " + Longitude);
+        //print("GeoToWorldPosition");
+        //print("Latitude = " + Latitude + " Longitude = " + Longitude);
 
         Vector2d latitudeLongitude = new Vector2d(Latitude, Longitude);
         Vector3 worldPos = _AbsMap.GeoToWorldPosition(latitudeLongitude, false);
-        print("worldPos = " + worldPos + " worldPos.X = " + worldPos.x + " worldPos.Z = " + worldPos.z);
+        //print("worldPos = " + worldPos + " worldPos.X = " + worldPos.x + " worldPos.Z = " + worldPos.z);
 
         return worldPos;
     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -154,6 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af064796eadbe40875ace7eb92406d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DataFromWeb: 0
+  WriteLog: 1
+  WriteWebData: 0
   WorldScale0: {x: 0.000242, y: 0.000242, z: 0.000242}
   _AbsMap: {fileID: 555018383}
   MortarPanSpeed: 5
@@ -210,7 +213,6 @@ MonoBehaviour:
   myBanner2: {fileID: 206925812}
   myMap: {fileID: 555018382}
   myLowSpeedSqr: 400
-  DataFromWeb: 0
 --- !u!114 &133207910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,8 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RecDir: Record
-  _WriteLog: 1
-  _WriteWebData: 0
 --- !u!114 &133207912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,7 +1031,7 @@ MonoBehaviour:
       latitudeLongitude: 55.97239722, 37.41305278
       zoom: 12
     extentOptions:
-      extentType: 1
+      extentType: 0
       defaultExtents:
         cameraBoundsOptions:
           camera: {fileID: 1787361574}
@@ -1462,6 +1462,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Tra\u0441kPointers"
       objectReference: {fileID: 0}
+    - target: {fileID: 7615380415122525138, guid: 5b0cbaf7d8044c64884c1ac32176e462,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7615380415122525137, guid: 5b0cbaf7d8044c64884c1ac32176e462,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1535,27 +1540,27 @@ PrefabInstance:
     - target: {fileID: 7615380414711056229, guid: 5b0cbaf7d8044c64884c1ac32176e462,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7615380414727066959, guid: 5b0cbaf7d8044c64884c1ac32176e462,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7615380414881470207, guid: 5b0cbaf7d8044c64884c1ac32176e462,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7615380414994053705, guid: 5b0cbaf7d8044c64884c1ac32176e462,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7615380415522790648, guid: 5b0cbaf7d8044c64884c1ac32176e462,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b0cbaf7d8044c64884c1ac32176e462, type: 3}
@@ -1840,6 +1845,36 @@ PrefabInstance:
       propertyPath: myFlightRadarScript
       value: 
       objectReference: {fileID: 133207909}
+    - target: {fileID: 3947880569973319854, guid: 4dc0490e3d564df4d8a1265c71603d78,
+        type: 3}
+      propertyPath: m_Positions.Array.data[0].z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947880569973319854, guid: 4dc0490e3d564df4d8a1265c71603d78,
+        type: 3}
+      propertyPath: m_Positions.Array.data[1].z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947880569973319854, guid: 4dc0490e3d564df4d8a1265c71603d78,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.0011955649
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947880569973319854, guid: 4dc0490e3d564df4d8a1265c71603d78,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947880569973319854, guid: 4dc0490e3d564df4d8a1265c71603d78,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 23955112770974678, guid: 4dc0490e3d564df4d8a1265c71603d78,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a0605be2e5f47634ebcb880323362bda, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dc0490e3d564df4d8a1265c71603d78, type: 3}
 --- !u!4 &1108118924 stripped
