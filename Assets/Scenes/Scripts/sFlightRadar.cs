@@ -1585,7 +1585,7 @@ public class sFlightRadar : MonoBehaviour
 
                     _Record.MyLog("ProcData", "%%% myFuncProcData(): Установим положение самолета");
                     myPlane.GO.transform.localPosition = myPlane.Position;
-                    myPlane.GO.transform.eulerAngles = myPlane.Euler;
+                    myPlane.GO.transform.localEulerAngles = myPlane.Euler;
 
                     // Уточним малую структуру в словаре
                     myPlaneVis[myKeys[i]] = myPlane;
@@ -1942,7 +1942,7 @@ public class sFlightRadar : MonoBehaviour
 
                     Vector3 myPos = myPlane.GO.transform.localPosition;
                     Vector3 myNewPos;
-                    Vector3 myEu = myPlane.GO.transform.eulerAngles;
+                    Vector3 myEu = myPlane.GO.transform.localEulerAngles;
                     Vector3 myNewEu;
 
                     // Производная от функции расчета положения по Безье (dZ/dX)
@@ -2231,7 +2231,7 @@ public class sFlightRadar : MonoBehaviour
                             myDeltaEu.x += 360.0f;
                         }
 
-                        myPlane.GO.transform.eulerAngles = myEu + myDeltaEu * Time.deltaTime * 1000 / myLeftToTargetTime;
+                        myPlane.GO.transform.localEulerAngles = myEu + myDeltaEu * Time.deltaTime * 1000 / myLeftToTargetTime;
 
                         //// Отладка
                         //if (myWriteLog)
@@ -2243,7 +2243,7 @@ public class sFlightRadar : MonoBehaviour
                         {
                             // Рысканье (y)
                             string myInter = "Linear";
-                            myNewEu = myPlane.GO.transform.eulerAngles;
+                            myNewEu = myPlane.GO.transform.localEulerAngles;
                             float myDeltaX = myNewPos.x - myPos.x;
                             float myDeltaZ = myNewPos.z - myPos.z;
                             if (Math.Abs(myDeltaX) < 0.001f && Math.Abs(myDeltaZ) < 0.001f)
@@ -2277,7 +2277,7 @@ public class sFlightRadar : MonoBehaviour
                             //myNewEu.z = 0.0f;
 
                             // Применим угол к модели самолета
-                            myPlane.GO.transform.eulerAngles = myNewEu;
+                            myPlane.GO.transform.localEulerAngles = myNewEu;
 
                             // Колонки данных под заголовком
                             _Record.MyLog(myKey + "_Data", myFrameCount + "\t" + myTim + "\t" + myPlane.GO.transform.localPosition.x + "\t" + myPlane.GO.transform.localPosition.y + "\t" + myPlane.GO.transform.localPosition.z

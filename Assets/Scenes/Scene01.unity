@@ -154,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af064796eadbe40875ace7eb92406d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DataFromWeb: 1
+  DataFromWeb: 0
   WriteLog: 1
-  WriteWebData: 1
+  WriteWebData: 0
   WorldScale0: {x: 0.000242, y: 0.000242, z: 0.000242}
   _AbsMap: {fileID: 555018383}
   MortarPanSpeed: 5
