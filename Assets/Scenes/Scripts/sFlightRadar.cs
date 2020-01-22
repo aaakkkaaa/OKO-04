@@ -1915,7 +1915,7 @@ public class sFlightRadar : MonoBehaviour
             // Избавиться от наложения баннеров - 1: создаем словарь с расстояниями до самолетов
             // Словарь - текущие расстояния от камеры до самолетов. Ключ - значение расстояния, значения - код ИКАО самолета
             Dictionary<float, String> myPlaneDistance = new Dictionary<float, String>();
-            _Record.MyLog("Banners", "=============================    Кадр " + myFrameCount + "   ===========================================================");
+            //_Record.MyLog("Banners", "=============================    Кадр " + myFrameCount + "   ===========================================================");
 
 
             // Двигаем самолеты
@@ -2126,7 +2126,7 @@ public class sFlightRadar : MonoBehaviour
                                     "\tmyDenominator=\t" + myDenominator + "\tmyTargetCurvature=\t" + myTargetCurvature + "\tmyTargetRoll\t" + myPlane.TrackPoints[1].eulerAngles.z +
                                     "\tmySourceRoll\t" + myPlane.TrackPoints[0].eulerAngles.z, false);
 
-                                // Заголовк для колонок данных (см. "Колонки данных под заголовком")
+                                // Заголовок для колонок данных (см. "Колонки данных под заголовком")
                                 _Record.MyLog(myKey + "_Data", "Frame\tTim\tPosX\tPosY\tPosZ\tYaw\tdX/dt\tdZ/dt\tdZ/dX\td2X/dt2\td2Z/dt2\td2Z/dX2\tRadius\tRoll\tInter", false);
 
 
@@ -2381,10 +2381,6 @@ public class sFlightRadar : MonoBehaviour
                 // Текущие параметры полета (малая структура)
                 MyPlaneVisual myPlane = myPlaneVis[myPlaneDistance[myDistances[i]]];
 
-                if(myPlane.Key == "4243d5")
-                {
-                    _Record.MyLog("Banners", "Проверяем затенение баннера для рейса " + myPlane.Call);
-                }
                 //_Record.MyLog("Banners", "Проверяем затенение баннера для рейса " + myPlane.Call);
 
                 // Проверить наложение баннеров

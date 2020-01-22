@@ -3,6 +3,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Положение Mortar в экранном режиме: X = 0, Y = 0.726, Z = -1.089. Наклон камеры X = 30
+// В режиме VR: X = -0.5, Y = 0, Z = -1.089. Наклон камеры X = 0
 
 public class sMortarMovement : MonoBehaviour
 {
