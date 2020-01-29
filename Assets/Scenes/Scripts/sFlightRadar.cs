@@ -55,7 +55,7 @@ public class sFlightRadar : MonoBehaviour
     // ===========================================================================================
 
     // Корневая часть запроса к ADS-B Exchange
-    String REQUEST_BASE_URL = "http://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?";
+    //String REQUEST_BASE_URL = "http://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?";
 
     // Корневая часть запроса к OpenSky
     String REQUEST_OpenSky_BASE_URL = "https://aka2001:MyOpenSky@opensky-network.org/api/states/all?";
@@ -98,7 +98,7 @@ public class sFlightRadar : MonoBehaviour
     float myLowSpeedSqr = 400.0f;
 
     // Уникальный номер самолета в текущей сессии работы программы.
-    int myPlaneNumber = 0;
+    //int myPlaneNumber = 0;
 
     // Объект для вывода сообщений в пространство
     sTextMessage myWorldMessage;
