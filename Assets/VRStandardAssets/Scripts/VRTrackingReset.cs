@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.VR;
+//using UnityEngine.VR;
 
 namespace VRStandardAssets.Utils
 {
